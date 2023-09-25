@@ -3,7 +3,6 @@ from discord.ext import commands
 import random
 import operator as op
 import time
-import asyncio
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -91,4 +90,4 @@ async def roll(ctx, *args):
         await ctx.send(f"Please enter a valid ability check")
         return
 
-diceRollerBot.run('MTE0NzAxNDQ0NTQ3NDc4NzQwOQ.GpoDtO.iMqgWiYF5pwCmJnkR0ZBk0LkaS0UBa1G89oQGQ')
+diceRollerBot.run('')
