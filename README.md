@@ -1,5 +1,5 @@
 # diceRollerBot
-> A simple bot that performs "checks" on a randomly generated number between 1 and 20. To "Pass" the check, the roll of the dice(s) must have a value greater than or equal to the generated number. Conversely to "fail" a check means rolling dice(s) whose value is less than the generated number. Modifiers are optional to affect the value of the dice roll.
+> A simple discord bot that performs "checks" on a randomly generated number between 1 and 20. To "Pass" the check, the roll of the dice(s) must have a value greater than or equal to the generated number. Conversely to that to "fail" a check means rolling dice(s) whose value is less than the generated number. Modifiers (to affect the value of the dice roll) are [planned to be] toggable and based on a successful or failed check can result in general changes to user's nickname, roles and permissions are [planned to be] toggable.
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -13,16 +13,20 @@
 * [License](#license)
 
 ## General Information
-- The purpose of this project was to make a simple discord bot that generates a number between 1 and 20 and have subsequent "dice rolls" that performs "checks" on a that generated number. 
+- The purpose of this project was to make a simple discord bot that generates a number between 1 and 20 and have subsequent "dice rolls" that performs "checks" on that generated number. 
 
 ## Softwares Used
-- Microsoft Visual Studio Community 2019 - Version 16.11.22
+- Microsoft Visual Studio Code - Version 1.82.2
 
 ## Features
 Planned features here:
-- Modifiers applied based on messages sent by users in discord server
-- Adjusting roles based on success or failure of checks
-- Adjusting nicknames based on success or failure of checks
+- 
+- Modifiers applied based on users' class profile in discord server
+- General Manipulation of members, channels and/or server
+     - Adjusting roles based on success or failure of checks
+     - Adjusting nicknames based on success or failure of checks
+     - Kicking Members
+     - Event Creation
 
 ## Screenshots
 - To Be Added ...
