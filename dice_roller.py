@@ -41,23 +41,19 @@ async def roll(ctx, *args):
         numberToPass: int = random.randint(2,20)
         
         await ctx.send(f'Difficulty Class: {numberToPass}')
-
+        time.sleep(1)
         # Handle special cases for rolls that are 1 or 20
         if result == 20:
-            time.sleep(1) 
             await ctx.send(f"Rolled a {result}: CRITICAL SUCCESS")
             return
-        elif result == 1:
-            time.sleep(1) 
+        elif result == 1: 
             await ctx.send(f"Rolled a {result}: CRITICAL FAILURE")       
             return
         # Check if roll passed or failed against the generated number to beat
         elif result >= numberToPass:
-            time.sleep(1) 
             await ctx.send(f'Rolled a {result}: SUCCESS')
             return
         elif result < numberToPass:
-            time.sleep(1) 
             await ctx.send(f'Rolled a {result}: FAILURE')
             return
     else:
