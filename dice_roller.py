@@ -89,4 +89,4 @@ async def roll(ctx, *args):
         await ctx.send(f"Please enter a valid ability check")
         return
 
-diceRollerBot.run('MTE0NzAxNDQ0NTQ3NDc4NzQwOQ.GClUJe.f_bPC6Z_diTV78CUqwnqrHJfOUXi7mRzz9aH6c')
+diceRollerBot.run('')
