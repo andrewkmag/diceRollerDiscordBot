@@ -32,9 +32,8 @@ async def processArgs(*args):
     temp: str = ""
     # Traverse through the arguments
     for i in args:
-        temp = temp + " " + i
-
-    print(f'CONSOLE: Concatenated argument is: {temp}')
+        temp = " ".join(*args)
+        print(f'CONSOLE: Concatenated argument is: {temp}')
     return temp
 
 # Bot command: Roll a d20 and check that value against a randomly generated number
@@ -90,4 +89,4 @@ async def roll(ctx, *args):
         await ctx.send(f"Please enter a valid ability check")
         return
 
-diceRollerBot.run('')
+diceRollerBot.run('MTE0NzAxNDQ0NTQ3NDc4NzQwOQ.GClUJe.f_bPC6Z_diTV78CUqwnqrHJfOUXi7mRzz9aH6c')
