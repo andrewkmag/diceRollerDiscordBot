@@ -3,6 +3,8 @@ from discord.ext import commands
 import random
 import operator as op
 import time
+from table2ascii import table2ascii as t2a, PresetStyle
+from table2ascii import Alignment
 
 
 intents = discord.Intents.default()
@@ -83,10 +85,17 @@ async def help(ctx, *args):
     processCommandString: str = args[0].lower()
     match processCommandString:
         case "roll":
-            rollDocumentationString: str = '```Usage: /roll <ability_check>\nExample: /roll sleight of hand\nList of Valid Ability Checks:\n'
-            for x in CHECKTYPESET:
-                rollDocumentationString = rollDocumentationString + "-> " + x + "\n"
-            await ctx.send(f'{rollDocumentationString}```')
+            rollDocumentationString: str = 'Usage: /roll <ability_check>\n\nExample: /roll sleight of hand\n\nTable of Valid Ability Checks:\n'
+            tableOfAbilityChecks = t2a( header=["Strength", "Dexterity", "Wisdom", "Intelligence", "Charisma"],
+                            body=[['Athletics', 'Acrobatics', 'Animal Handling', 'Arcana', 'Deception'], 
+                                  [' ', 'Sleight of Hand', 'Insight', 'History', 'Intimidation'], 
+                                  [' ', ' ', 'Medicine', 'Investigation', 'Performance'],
+                                  [' ', ' ', 'Perception', 'Nature', 'Persuasion'],
+                                  [' ', ' ', 'Survival', 'Religion', ' ']],
+                            alignments=Alignment.LEFT,
+                        )
+            noteAbilityChecks: str = '\n\nNote: *Constitution* is a valid ability check but since there are no other checks that fall into that category it is excluded from the above table.'
+            await ctx.send(f'```{rollDocumentationString}{tableOfAbilityChecks}{noteAbilityChecks}```')
         case _:
             await ctx.send(f'No documentation provided for the command / non-existant command input')
 
