@@ -49,10 +49,9 @@ CHECKCLASSSET = {"barbarian", "bard", "cleric",
 userClassSelectionDict = {}
 
 # Bot command: /selectClass <class_name>
-# Sets the class for discord user
+# Sets the starting class for discord user
 @diceRollerBot.command()
 async def selectClass(ctx, userChoice: str):
-
     # Check if the user has already chosen a class
     # and send inform-message that states users can only select
     # a class once with the selectClass command 
@@ -71,6 +70,21 @@ async def selectClass(ctx, userChoice: str):
             await ctx.send(f"Invalid/Unknown class ...")
             await ctx.send(f"Please enter a valid class to select from")
             return
+        
+# Bot command: /displayClass
+# Displays the discord user's current class if set
+@diceRollerBot.command()
+async def displayClass(ctx):
+    # Check if player has even set their class
+    # and display class if found and inform if not found
+    userHasClass = userClassSelectionDict.get(ctx.author.id)
+    if userHasClass:
+        await ctx.send(f'***{ctx.author.name}\'s*** current class is: __**{userHasClass.className}**__')
+        return
+    else:
+        await ctx.send(f'***{ctx.author.name}\'s*** has not selected a class!')
+        return
+
 
 # Bot command: /roll <ability_check>
 # Roll a d20 (randomly generated number between 1 and 20) 
