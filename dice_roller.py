@@ -56,7 +56,7 @@ async def selectClass(ctx, userChoice: str):
     # and send inform-message that states users can only select
     # a class once with the selectClass command 
     if op.countOf(userClassSelectionDict,ctx.author.id) == True:
-        await ctx.send(f"You can only select your starting class once!")
+        await ctx.send(f"```ERROR: Class not selected ...\nERROR: You can only select your starting class once.```")
         return
     else:
         userChoiceStr: str = userChoice.lower()
@@ -67,8 +67,8 @@ async def selectClass(ctx, userChoice: str):
             await ctx.send(f'***{ctx.author.name}*** has chosen the __**{userChoiceStr}**__ class as their starting class!')
             return
         else:
-            await ctx.send(f"Invalid/Unknown class ...")
-            await ctx.send(f"Please enter a valid class to select from")
+            await ctx.send(f"```ERROR: Invalid/Unknown class ...```")
+            await ctx.send(f"```ERROR: Please enter a valid class to select from.```")
             return
         
 # Bot command: /displayClass
