@@ -19,6 +19,17 @@ diceRollerBot = commands.Bot(command_prefix='/', intents=intents)
 # Remove provided help command
 diceRollerBot.remove_command('help')
 
+# Bot event: Log on the server terminal when bot is active and ready to send messages
+@diceRollerBot.event
+async def on_ready():
+    print(f'{diceRollerBot.user.name} ~Ready to perform checks ...')
+
+# Define player class
+class PlayerClass:
+    def __init__(self, name: str, className: str):
+        self.name = name
+        self.className = className
+
 # Define set to contain valid types of checks for command parameter
 CHECKTYPESET = {"athletics", "acrobatics", "sleight of hand",
                 "stealth", "arcana", "history", "investigation",
@@ -28,10 +39,52 @@ CHECKTYPESET = {"athletics", "acrobatics", "sleight of hand",
                 "persuasion", "strength", "wisdom", "intelligence", 
                 "dexterity", "charisma", "constitution"}
 
-# Bot event: When bot is ready send message
-@diceRollerBot.event
-async def on_ready():
-    print(f'{diceRollerBot.user.name} ~Ready to perform checks ...')
+# Define set of valid classes users can select from
+CHECKCLASSSET = {"barbarian", "bard", "cleric", 
+                 "druid", "fighter", "monk", 
+                 "paladin", "ranger", "rogue", 
+                 "sorcerer", "warlock", "wizard"}
+
+# Define dictionary of users that have selected their starting class
+userClassSelectionDict = {}
+
+# Bot command: /selectClass <class_name>
+# Sets the starting class for discord user
+@diceRollerBot.command()
+async def selectClass(ctx, userChoice: str):
+    # Check if the user has already chosen a class
+    # and send inform-message that states users can only select
+    # a class once with the selectClass command 
+    if op.countOf(userClassSelectionDict,ctx.author.id) == True:
+        await ctx.send(f"```ERROR: Class not selected ...\nERROR: You can only select your starting class once.```")
+        return
+    else:
+        userChoiceStr: str = userChoice.lower()
+        # Create a PlayerClass object and Add that player to dictionary
+        if op.countOf(CHECKCLASSSET, userChoiceStr) == True:
+            startingPlayerClass = PlayerClass(ctx.author.name, userChoiceStr)
+            userClassSelectionDict[ctx.author.id] = startingPlayerClass
+            await ctx.send(f'***{ctx.author.name}*** has chosen the __**{userChoiceStr}**__ class as their starting class!')
+            return
+        else:
+            await ctx.send(f"```ERROR: Invalid/Unknown class ...```")
+            await ctx.send(f"```ERROR: Please enter a valid class to select from.```")
+            return
+        
+# Bot command: /displayClass
+# Displays the discord user's current class if set
+@diceRollerBot.command()
+async def displayClass(ctx):
+    # Check if player has even set their class
+    # and display class if found and inform if not found
+    userHasClass = userClassSelectionDict.get(ctx.author.id)
+    if userHasClass:
+        await ctx.send(f'***{ctx.author.name}\'s*** current class is: __**{userHasClass.className}**__')
+        return
+    else:
+        await ctx.send(f'***{ctx.author.name}\'s*** has not selected a class!')
+        return
+
 
 # Bot command: /roll <ability_check>
 # Roll a d20 (randomly generated number between 1 and 20) 
@@ -66,7 +119,6 @@ async def roll(ctx, *args):
             await ctx.send(f'Rolled a {result}: FAILURE')
             return
     else:
-        time.sleep(1) 
         await ctx.send(f"Invalid/Unknown ability check ...")
         await ctx.send(f"Please enter a valid ability check")
         return
