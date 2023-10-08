@@ -130,7 +130,9 @@ async def roll(ctx, *args):
 async def help(ctx, *args):
     # Handle case of empty arguments
     if len(args) == 0:
-        await ctx.send(f'```Documentation available for commands:\n- roll```')
+        SETOFCOMMANDS = {'- roll', '- selectClass', '- displayClass'}
+        listOfCommandsString: str = "\n".join(SETOFCOMMANDS)
+        await ctx.send(f'__**Documentation available for commands:**__\n{listOfCommandsString}')
         return
     
     # Check which command to display documentation for
@@ -138,17 +140,27 @@ async def help(ctx, *args):
     match processCommandString:
         case "roll":
             rollDocumentationString: str = 'Usage: /roll <ability_check>\n\nExample: /roll sleight of hand\n\nTable of Valid Ability Checks:\n'
-            tableOfAbilityChecks = t2a( header=["Strength", "Dexterity", "Wisdom", "Intelligence", "Charisma"],
-                            body=[['Athletics', 'Acrobatics', 'Animal Handling', 'Arcana', 'Deception'], 
-                                  [' ', 'Sleight of Hand', 'Insight', 'History', 'Intimidation'], 
-                                  [' ', ' ', 'Medicine', 'Investigation', 'Performance'],
-                                  [' ', ' ', 'Perception', 'Nature', 'Persuasion'],
-                                  [' ', ' ', 'Survival', 'Religion', ' ']],
-                            alignments=Alignment.LEFT,
+            tableOfAbilityChecks = t2a(header=["Strength", "Dexterity", "Wisdom", "Intelligence", "Charisma"],
+                                        body=[['Athletics', 'Acrobatics', 'Animal Handling', 'Arcana', 'Deception'], 
+                                                [' ', 'Sleight of Hand', 'Insight', 'History', 'Intimidation'], 
+                                                [' ', ' ', 'Medicine', 'Investigation', 'Performance'],
+                                                [' ', ' ', 'Perception', 'Nature', 'Persuasion'],
+                                                [' ', ' ', 'Survival', 'Religion', ' ']],
+                                        alignments=Alignment.LEFT,
                         )
             noteAbilityChecks: str = '\n\nNote: *Constitution* is a valid ability check but since there are no other checks that fall into that category it is excluded from the above table.'
             await ctx.send(f'```{rollDocumentationString}{tableOfAbilityChecks}{noteAbilityChecks}```')
+        case "selectclass":
+            selectClassDocumentationString: str = 'Usage: /selectClass <class_name>\n\nExample: /selectClass Barbarian\n\nTable of Valid Classes:\n'
+            tableOfClasses = t2a(header=["Class Names"],
+                                 body=[['Barbarian'], ['Bard'], ['Cleric'], ['Druid'], ['Fighter'], ['Monk'], 
+                                 ['Paladin'],['Ranger'], ['Rogue'], ['Sorcerer'], ['Warlock'], ['Wizard']],
+                                 alignments=Alignment.LEFT,)
+            await ctx.send(f'```{selectClassDocumentationString}{tableOfClasses}```')
+        case "displayclass":
+            displayClassDocumentationString: str = 'Usage: /displayClass\n\nDisplays the current class of the user if set and informs the user if they have not selected a valid class.'
+            await ctx.send(f'```{displayClassDocumentationString}```')
         case _:
-            await ctx.send(f'No documentation provided for the command / non-existant command input')
+            await ctx.send(f'No documentation provided for the command / non-existant command input.')
 
 diceRollerBot.run('')
