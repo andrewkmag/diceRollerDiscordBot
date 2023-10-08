@@ -140,22 +140,22 @@ async def help(ctx, *args):
     match processCommandString:
         case "roll":
             rollDocumentationString: str = 'Usage: /roll <ability_check>\n\nExample: /roll sleight of hand\n\nTable of Valid Ability Checks:\n'
-            tableOfAbilityChecks = t2a(header = ["Strength", "Dexterity", "Wisdom", "Intelligence", "Charisma"],
-                                        body = [['Athletics', 'Acrobatics', 'Animal Handling', 'Arcana', 'Deception'], 
+            tableOfAbilityChecks = t2a(header=["Strength", "Dexterity", "Wisdom", "Intelligence", "Charisma"],
+                                        body=[['Athletics', 'Acrobatics', 'Animal Handling', 'Arcana', 'Deception'], 
                                                 [' ', 'Sleight of Hand', 'Insight', 'History', 'Intimidation'], 
                                                 [' ', ' ', 'Medicine', 'Investigation', 'Performance'],
                                                 [' ', ' ', 'Perception', 'Nature', 'Persuasion'],
                                                 [' ', ' ', 'Survival', 'Religion', ' ']],
-                                        alignments = Alignment.LEFT,
+                                        alignments=Alignment.LEFT,
                         )
             noteAbilityChecks: str = '\n\nNote: *Constitution* is a valid ability check but since there are no other checks that fall into that category it is excluded from the above table.'
             await ctx.send(f'```{rollDocumentationString}{tableOfAbilityChecks}{noteAbilityChecks}```')
         case "selectclass":
             selectClassDocumentationString: str = 'Usage: /selectClass <class_name>\n\nExample: /selectClass Barbarian\n\nTable of Valid Classes:\n'
-            tableOfClasses = t2a(header = ["Class Names"],
-                                 body = [['Barbarian'], ['Bard'], ['Cleric'], ['Druid'], ['Fighter'], ['Monk'], 
+            tableOfClasses = t2a(header=["Class Names"],
+                                 body=[['Barbarian'], ['Bard'], ['Cleric'], ['Druid'], ['Fighter'], ['Monk'], 
                                  ['Paladin'],['Ranger'], ['Rogue'], ['Sorcerer'], ['Warlock'], ['Wizard']],
-                                 alignments = Alignment.LEFT,)
+                                 alignments=Alignment.LEFT,)
             await ctx.send(f'```{selectClassDocumentationString}{tableOfClasses}```')
         case "displayclass":
             displayClassDocumentationString: str = 'Usage: /displayClass\n\nDisplays the current class of the user if set and informs the user if they have not selected a valid class.'
