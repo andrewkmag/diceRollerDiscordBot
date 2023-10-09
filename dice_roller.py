@@ -6,7 +6,6 @@ import time
 from table2ascii import table2ascii as t2a, PresetStyle
 from table2ascii import Alignment
 
-
 intents = discord.Intents.default()
 intents.message_content = True
 intents.presences = True
@@ -86,6 +85,7 @@ async def displayClass(ctx):
         return
 
 
+
 # Bot command: /roll <ability_check>
 # Roll a d20 (randomly generated number between 1 and 20) 
 # and check that value against the Difficulty Class number
@@ -96,13 +96,24 @@ async def roll(ctx, *args):
 
     # Check that ability check type is valid
     if op.countOf(CHECKTYPESET, checkType) == True:
-            
-        # Simulate the roll of a 20 sided dice
-        result: int = random.randint(1,20)
+
         # Setup random number to perform check against
         numberToPass: int = random.randint(2,20)
-        
+
         await ctx.send(f'Difficulty Class: {numberToPass}')
+        time.sleep(1)
+        
+        # Simulate the roll of a 20 sided dice
+        result: int = random.randint(1,20)
+
+        # TODO: Check if the user's class is set. If not continue the roll as normal
+        
+        # TODO: If user's class is set check if their class
+        # is proficient in the ability / skill that is being checked
+
+        # TODO: Apply modifier if proficient in the ability / skill
+        # TODO: If not proficient add negative modifier in the ability check being performed 
+
         time.sleep(1)
         # Handle special cases for rolls that are 1 or 20
         if result == 20:

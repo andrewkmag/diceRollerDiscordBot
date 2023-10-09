@@ -1,0 +1,37 @@
+# Keys are the 'Abilities' with 'Skills' as the values
+# 'Skills' are also keys to classes that are proficient in those skills
+# and are represented as an array of strings
+# Note: Each ability also has an array of classes that are proficient in
+# all the skills in that ability.
+strength:
+  [barbarian, bard, fighter, monk, paladin, ranger, rogue]
+  athletics: [barbarian, bard, fighter, monk, paladin, ranger, rogue]
+
+dexterity:
+  [bard, rogue]
+  acrobatics: [fighter, bard, monk, rogue]
+  sleight of hand: [bard, rogue]
+  stealth: [bard, monk, ranger, rogue]
+
+wisdom:
+  [bard, druid]
+  animal handling: [barbarian, bard, druid, fighter, ranger]
+  insight: [bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, wizard]
+  medicine: [bard, cleric, druid, paladin, wizard]
+  perception: [barbarian, bard, druid, fighter, ranger, rogue]
+  survival: [barbarian, bard, druid, fighter, ranger]
+
+intelligence:
+  [bard, warlock, wizard]
+  arcana: [bard, druid, sorcerer, warlock, wizard]
+  history: [bard, cleric, fighter, monk, warlock, wizard]
+  investigation: [bard, ranger, rogue, warlock, wizard]
+  nature: [barbarian, bard, druid, ranger, warlock]
+  religion: [bard, cleric, druid, monk, paladin, sorcerer, warlock, wizard]
+
+charisma:
+  [bard, rogue]
+  deception: [bard, rogue, sorcerer, warlock]
+  intimidation: [fighter, barbarian, bard, paladin, rogue, sorcerer, warlock]
+  performance: [bard, rogue]
+  persuasion: [bard, cleric, paladin, rogue, sorcerer]
