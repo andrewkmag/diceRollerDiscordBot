@@ -1,6 +1,6 @@
 # diceRollerBot
 
-> A simple discord bot that performs "checks" on a randomly generated number between 1 and 20. To "Pass" the check, the roll of the dice(s) must have a value greater than or equal to the generated number. Conversely to that to "fail" a check means rolling dice(s) whose value is less than the generated number. Modifiers (to affect the value of the dice roll) are [planned to be] toggable and based on a successful or failed check can result in general changes to user's nickname, roles and permissions are [planned to be] toggable.
+> A discord bot that performs "checks" on a randomly generated number between 1 and 20. To "Pass" the check, the roll of the dice(s) must have a value greater than or equal to the generated number. Conversely to that to "fail" a check means rolling dice(s) whose value is less than the generated number. Modifiers (to affect the value of the dice roll) are [planned to be] toggable and based on a successful or failed check can result in general changes to user's nickname, roles and permissions are [planned to be] toggable.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@
 
 ## General Information
 
-* The purpose of this project was to make a simple discord bot that generates a number between 1 and 20 and have subsequent "dice rolls" that performs "checks" on that generated number.
+* The purpose of this project was to make a simple discord bot that generates a number between 1 and 20 and have subsequent "dice rolls" that performs "checks" on that generated number. It is motivated and inspired by the Ability/Skill check game mechanic in D&D and Baldur's Gate 3.
 
 ## Softwares Used
 
@@ -24,13 +24,20 @@
 
 ## Features
 
-* /roll <ability_check> implemented to simulate an Ability Check
+* /roll <ability_check>
+  * Simulate's an Ability or Skill Check
+* /select_class <class_name> 
+  * Allows users to select from the various classes available -- enables modifiers which can either add or subtract from the values seen in the /roll command
+* /display_class
+  * Displays the user's class if set
+* /help
+  * Custom help command that displays documentation about the bot's functionality and usage of valid commands
 
-## Planned features here
+## Planned features
 
-* Classes that are unique to users
-  * Edittable for each user
-  * Different classes provide different modifiers when performing the /roll command
+* Classes that are unique to users ✅
+  * Edittable for each user ✅
+  * Different classes provide different modifiers when performing the /roll command ✅
 * Modifiers applied based on users' class profile in discord server
 * General Manipulation of members, channels and/or server
   * Adjusting roles based on success or failure of checks
@@ -49,12 +56,13 @@
 
 ## Room for Improvement
 
-* To be updated accordingly upon further completion of project ...
+* Basic Functionality has been completed for:
+  * Simulating the ability/skill check via the /roll command ✅
+  * User's to set their classes which subsequently affect the values of future calls to the /roll command via modifiers ✅
 
 To do:
 
-* Modifiers
-* Classes
+* Integration of .yaml file to store users' classes
 * Member properties manipulation
   * Roles
   * Nicknames
