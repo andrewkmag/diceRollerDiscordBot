@@ -29,7 +29,7 @@ async def on_ready():
     print(f'{dice_roller_bot.user.name} ~Ready to perform checks ...')
 
 # Define player class
-class player_class:
+class user_class:
     def __init__(self, name: str, class_name: str):
         self.name = name
         self.class_name = class_name
@@ -64,33 +64,43 @@ async def select_class(ctx, user_class_choice: str):
         return
     else:
         user_class_choice_str: str = user_class_choice.lower()
-        # Create a player_class object and Add that player to dictionary
+        # Create a user_class object and Add that user to dictionary
         if op.countOf(CHECKCLASSSET, user_class_choice_str) == True:
-            starting_player_class = player_class(ctx.author.name, user_class_choice_str)
+            starting_player_class = user_class(ctx.author.name, user_class_choice_str)
             user_class_selection_dict[ctx.author.id] = starting_player_class
             await ctx.send(f'***{ctx.author.name.upper()}*** has chosen the __**{user_class_choice_str.upper()}**__ class as their starting class!')
             return
         else:
-            await ctx.send(f"```ERROR: Invalid/Unknown class ...```")
-            await ctx.send(f"```ERROR: Please enter a valid class to select from.```")
+            await ctx.send(f"```ERROR: Invalid/Unknown class ...\nERROR: Please enter a valid class to select from.```")
             return
         
 # Bot command: /display_class
 # Displays the discord user's current class if set
 @dice_roller_bot.command()
 async def display_class(ctx):
-    # Check if player has even set their class
-    # and display class if found and inform if not found
+    # Check if user has even set their class
+    # and display class if found
     user_has_class = user_class_selection_dict.get(ctx.author.id)
     if user_has_class:
         await ctx.send(f'***{ctx.author.name.upper()}\'s*** current class is: __**{user_has_class.class_name.upper()}**__')
         return
-    else:
-        await ctx.send(f'***{ctx.author.name.upper()}\'s*** has not selected a class!')
+    else: # Inform user
+        await ctx.send(f'***{ctx.author.name.upper()}*** has not selected a class!')
         return
 
-# TODO: Bot command: /remove_class
+# Bot command: /remove_class
 # Removes the discord user's current class if set
+@dice_roller_bot.command()
+async def remove_class(ctx):
+    # Check if user has even set their class and remove class if present
+    old_class = user_class_selection_dict.get(ctx.author.id)
+    if ctx.author.id in user_class_selection_dict:
+        del user_class_selection_dict[ctx.author.id]
+        await ctx.send(f'***{ctx.author.name.upper()}\'s*** has removed their class: ~~**{old_class.class_name.upper()}**~~')
+        return
+    else:
+        await ctx.send(f'***{ctx.author.name.upper()}\'s*** has no class to remove!')
+        return
 
 # Bot command: /roll <ability_check>
 # Roll a d20 (randomly generated number between 1 and 20) 
@@ -143,8 +153,7 @@ async def roll(ctx, *args):
             await ctx.send(f'## FAILURE')
             return
     else:
-        await ctx.send(f"Invalid/Unknown ability check ...")
-        await ctx.send(f"Please enter a valid ability check")
+        await ctx.send(f"```ERROR: Invalid/Unknown ability check ...\nERROR: Please enter a valid ability check```")
         return
 
 # Bot command: /help roll
