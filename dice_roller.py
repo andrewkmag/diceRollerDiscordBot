@@ -1,11 +1,11 @@
 import discord
 from discord.ext import commands
+import yaml
 import random
 import operator as op
 import time
 from table2ascii import table2ascii as t2a, PresetStyle
 from table2ascii import Alignment
-
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -15,6 +15,10 @@ intents.presences = True
 
 # Setup bot with command prefix '/'
 diceRollerBot = commands.Bot(command_prefix='/', intents=intents)
+
+# Load ability and skill proficiency class data from YAML file
+with open("class_modifier_spec.yaml", "r") as file:
+    ability_data = yaml.safe_load(file)
 
 # Remove provided help command
 diceRollerBot.remove_command('help')
@@ -64,7 +68,7 @@ async def selectClass(ctx, userChoice: str):
         if op.countOf(CHECKCLASSSET, userChoiceStr) == True:
             startingPlayerClass = PlayerClass(ctx.author.name, userChoiceStr)
             userClassSelectionDict[ctx.author.id] = startingPlayerClass
-            await ctx.send(f'***{ctx.author.name}*** has chosen the __**{userChoiceStr}**__ class as their starting class!')
+            await ctx.send(f'***{ctx.author.name.upper()}*** has chosen the __**{userChoiceStr.upper()}**__ class as their starting class!')
             return
         else:
             await ctx.send(f"```ERROR: Invalid/Unknown class ...```")
@@ -79,12 +83,11 @@ async def displayClass(ctx):
     # and display class if found and inform if not found
     userHasClass = userClassSelectionDict.get(ctx.author.id)
     if userHasClass:
-        await ctx.send(f'***{ctx.author.name}\'s*** current class is: __**{userHasClass.className}**__')
+        await ctx.send(f'***{ctx.author.name.upper()}\'s*** current class is: __**{userHasClass.className.upper()}**__')
         return
     else:
-        await ctx.send(f'***{ctx.author.name}\'s*** has not selected a class!')
+        await ctx.send(f'***{ctx.author.name.upper()}\'s*** has not selected a class!')
         return
-
 
 # Bot command: /roll <ability_check>
 # Roll a d20 (randomly generated number between 1 and 20) 
@@ -96,27 +99,45 @@ async def roll(ctx, *args):
 
     # Check that ability check type is valid
     if op.countOf(CHECKTYPESET, checkType) == True:
-            
-        # Simulate the roll of a 20 sided dice
-        result: int = random.randint(1,20)
+
         # Setup random number to perform check against
         numberToPass: int = random.randint(2,20)
-        
-        await ctx.send(f'Difficulty Class: {numberToPass}')
+        await ctx.send(f'# __Difficulty Class: {numberToPass}__')
         time.sleep(1)
+        
+        # Simulate the roll of a 20 sided dice
+        result: int = random.randint(1,20)
+        
         # Handle special cases for rolls that are 1 or 20
         if result == 20:
-            await ctx.send(f"Rolled a {result}: CRITICAL SUCCESS")
+            await ctx.send(f"## Rolled a {result}: CRITICAL SUCCESS")
             return
         elif result == 1: 
-            await ctx.send(f"Rolled a {result}: CRITICAL FAILURE")       
+            await ctx.send(f"## Rolled a {result}: CRITICAL FAILURE")       
             return
+        
+        await ctx.send(f'## Rolled a {result}')
+        # Check if the user's class is set. If not continue the roll as normal
+        userClass = userClassSelectionDict.get(ctx.author.id)
+        if userClass:
+                modifier: int = random.randint(1,3)
+                # Check if the user's class is proficient in that ability
+                if checkType in ability_data[userClass.className]:
+                    await ctx.send(f'## +{modifier} Modifier: __**{userClass.className.upper()}**__ Proficiency in __**{checkType.upper()}**__ ')
+                    result += modifier
+                    await ctx.send(f'## Rolled a {result}')
+                # Else apply negative modifer if user's class has no proficiency
+                else:
+                    await ctx.send(f'## -{modifier} Modifier: __**{userClass.className.upper()}**__ Not Proficient in __**{checkType.upper()}**__ ')
+                    result -= modifier
+                    await ctx.send(f'## Rolled a {result}')
+
         # Check if roll passed or failed against the generated number to beat
-        elif result >= numberToPass:
-            await ctx.send(f'Rolled a {result}: SUCCESS')
+        if result >= numberToPass:
+            await ctx.send(f'## SUCCESS')
             return
         elif result < numberToPass:
-            await ctx.send(f'Rolled a {result}: FAILURE')
+            await ctx.send(f'## FAILURE')
             return
     else:
         await ctx.send(f"Invalid/Unknown ability check ...")

@@ -1,0 +1,97 @@
+# Keys are the 'Classes' with 'Abilities' and 'Skills' as the values
+# MISSING: persuasion and performance
+barbarian:
+  - strength
+  - athletics
+  - animal handling
+  - intimidation
+
+bard:
+  - strength
+  - athletics
+  - dexterity
+  - acrobatics
+  - sleight of hand
+  - stealth
+  - wisdom
+  - animal handling
+  - insight
+  - intelligence
+  - arcana
+  - history
+  - charisma
+  - deception
+  - intimidation
+  - persuasion
+  - performance
+
+cleric:
+  - insight
+  - history
+
+druid:
+  - wisdom
+  - animal handling
+  - insight
+  - arcana
+
+fighter:
+  - strength
+  - athletics
+  - acrobatics
+  - animal handling
+  - insight
+  - history
+  - intimidation
+
+monk:
+  - strength
+  - athletics
+  - acrobatics
+  - stealth
+  - insight
+  - history
+
+paladin:
+  - strength
+  - athletics
+  - insight
+  - intimidation
+
+ranger:
+  - strength
+  - athletics
+  - stealth
+  - animal handling
+  - insight
+
+rogue:
+  - strength
+  - athletics
+  - dexterity
+  - acrobatics
+  - sleight of hand
+  - stealth
+  - insight
+  - charisma
+  - deception
+  - intimidation
+
+sorcerer:
+  - insight
+  - arcana
+  - deception
+  - intimidation
+
+warlock:
+  - intelligence
+  - arcana
+  - history
+  - deception
+  - intimidation
+
+wizard:
+  - insight
+  - intelligence
+  - arcana
+  - history
