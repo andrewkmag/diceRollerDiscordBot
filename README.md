@@ -26,8 +26,10 @@
 
 * /roll <ability_check>
   * Simulate's an Ability or Skill Check
-* /select_class <class_name> 
+* /select_class <class_name>
   * Allows users to select from the various classes available -- enables modifiers which can either add or subtract from the values seen in the /roll command
+* /remove_class
+  * Removes the user's class if set
 * /display_class
   * Displays the user's class if set
 * /help
@@ -38,12 +40,18 @@
 * Classes that are unique to users ✅
   * Edittable for each user ✅
   * Different classes provide different modifiers when performing the /roll command ✅
-* Modifiers applied based on users' class profile in discord server
+* Modifiers applied based on users' class profile in discord server ✅
 * General Manipulation of members, channels and/or server
   * Adjusting roles based on success or failure of checks
   * Adjusting nicknames based on success or failure of checks
   * Kicking Members or Moving Members based on failure of certain checks
-  * Event Creation
+* Command to display stats of users in the server
+  * Potential Statistics:
+    * Current Number of ability checks performed (number of times /roll was used)
+    * Current Number of ability checks passed
+    * Current Number of ability checks failed
+    * Current Number of CRITICAL FAILURES
+    * Current Number of CRITICAL SUCCESSES
 
 ## Screenshots
 

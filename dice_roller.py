@@ -26,7 +26,7 @@ dice_roller_bot.remove_command('help')
 # Bot event: Log on the server terminal when bot is active and ready to send messages
 @dice_roller_bot.event
 async def on_ready():
-    print(f'{dice_roller_bot.user.name} ~Ready to perform checks ...')
+    print(f'[INFORM] | INFO: {dice_roller_bot.user.name} ONLINE and awaiting commands')
 
 # Define player class
 class user_class:
@@ -49,8 +49,20 @@ CHECKCLASSSET = {"barbarian", "bard", "cleric",
                  "paladin", "ranger", "rogue", 
                  "sorcerer", "warlock", "wizard"}
 
-# Define dictionary of users that have selected their starting class
-user_class_selection_dict = {}
+def save_user_classes():
+    # Save players dictionary to players.yaml file
+    with open("user_classes.yaml", "w") as yaml_file:
+        yaml.dump(user_class_selection_dict, yaml_file)
+
+def load_user_classes():
+    # Load players dictionary from players.yaml file
+    try:
+        with open("user_classes.yaml", "r") as yaml_file:
+            return yaml.load(yaml_file, Loader=yaml.FullLoader)
+    except FileNotFoundError:
+        return {}
+
+user_class_selection_dict = load_user_classes() 
 
 # Bot command: /select_class <class_name>
 # Sets the starting class for discord user
@@ -68,6 +80,7 @@ async def select_class(ctx, user_class_choice: str):
         if op.countOf(CHECKCLASSSET, user_class_choice_str) == True:
             starting_player_class = user_class(ctx.author.name, user_class_choice_str)
             user_class_selection_dict[ctx.author.id] = starting_player_class
+            save_user_classes()
             await ctx.send(f'***{ctx.author.name.upper()}*** has chosen the __**{user_class_choice_str.upper()}**__ class as their starting class!')
             return
         else:
@@ -96,6 +109,7 @@ async def remove_class(ctx):
     old_class = user_class_selection_dict.get(ctx.author.id)
     if ctx.author.id in user_class_selection_dict:
         del user_class_selection_dict[ctx.author.id]
+        save_user_classes()
         await ctx.send(f'***{ctx.author.name.upper()}\'s*** has removed their class: ~~**{old_class.class_name.upper()}**~~')
         return
     else:
