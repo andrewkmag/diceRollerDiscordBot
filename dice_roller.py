@@ -50,12 +50,12 @@ CHECKCLASSSET = {"barbarian", "bard", "cleric",
                  "sorcerer", "warlock", "wizard"}
 
 def save_user_classes():
-    # Save players dictionary to players.yaml file
+    # Save players dictionary to user_classes.yaml file
     with open("user_classes.yaml", "w") as yaml_file:
         yaml.dump(user_class_selection_dict, yaml_file)
 
 def load_user_classes():
-    # Load players dictionary from players.yaml file
+    # Load players dictionary from user_classes.yaml file
     try:
         with open("user_classes.yaml", "r") as yaml_file:
             return yaml.load(yaml_file, Loader=yaml.FullLoader)
@@ -72,7 +72,7 @@ async def select_class(ctx, user_class_choice: str):
     # and send inform-message that states users can only select
     # a class once with the select_class command 
     if op.countOf(user_class_selection_dict,ctx.author.id) == True:
-        await ctx.send(f"```ERROR: Class not selected ...\nERROR: You can only select your starting class once.```")
+        await ctx.send(f"```[ERROR]: Class not selected ...\n[ERROR]: You can only select your starting class once.```")
         return
     else:
         user_class_choice_str: str = user_class_choice.lower()
@@ -84,7 +84,7 @@ async def select_class(ctx, user_class_choice: str):
             await ctx.send(f'***{ctx.author.name.upper()}*** has chosen the __**{user_class_choice_str.upper()}**__ class as their starting class!')
             return
         else:
-            await ctx.send(f"```ERROR: Invalid/Unknown class ...\nERROR: Please enter a valid class to select from.```")
+            await ctx.send(f"```[ERROR]: Invalid/Unknown class ...\n[ERROR]: Please enter a valid class to select from.```")
             return
         
 # Bot command: /display_class
@@ -167,7 +167,7 @@ async def roll(ctx, *args):
             await ctx.send(f'## FAILURE')
             return
     else:
-        await ctx.send(f"```ERROR: Invalid/Unknown ability check ...\nERROR: Please enter a valid ability check```")
+        await ctx.send(f"```[ERROR]: Invalid/Unknown ability check ...\n[ERROR]: Please enter a valid ability check```")
         return
 
 # Bot command: /help roll
